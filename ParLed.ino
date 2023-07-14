@@ -119,7 +119,10 @@ void dmx_write_par_led(struct ParLedMessages messages) {
 }
 
 // --------------------------------------------------------------------------------------------------------------------
-
+/**
+ * Fades on first red then blue and then green channels on all par leds at the same time
+ * Afterwards it fades them of the channels in the same order on all par leds at the same time
+ */
 void dmx_par_wave1() {
   // fade on
   for (byte i = 0; i < 250; i += 5) {
@@ -147,7 +150,10 @@ void dmx_par_wave1() {
 }
 
 // --------------------------------------------------------------------------------------------------------------------
-
+/**
+ * Fades on green and blue channels on each par led one after another.
+ * Afterwards it fades the same channels off on each par led one after another 
+ */
 void dmx_par_wave2() {
     for (byte i = 0; i < 250; i += 5) {
         dmx_write_par_led(lamps_with({0, i, i}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}));
@@ -178,7 +184,10 @@ void dmx_par_wave2() {
 }
 
 // --------------------------------------------------------------------------------------------------------------------
-
+/**
+ * Waves through all channels in an overlapping manner between all par leds and
+ * then fades them off all at the same time
+ */
 void dmx_par_wave3() {
     for (byte i = 0; i < 250; i += 5) {
         dmx_write_par_led(lamps_with({i, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}));
@@ -231,14 +240,175 @@ void dmx_par_wave4() {
 }
 
 // --------------------------------------------------------------------------------------------------------------------
+/**
+ * Waves through par led per channel
+ */
+void dmx_par_wave5() {
+  // red wave
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({i, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({250 - i, 0, 0}, {i, 0, 0}, {0, 0, 0}, {0, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 0, 0}, {250 - i, 0, 0}, {i, 0, 0}, {0, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 0}, {250 - i, 0, 0}, {i, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {250-i, 0, 0}));
+  }
+  // green wave
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, i, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 250 - i, 0}, {0, i, 0}, {0, 0, 0}, {0, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 0, 0}, {0, 250 - i, 0}, {0, i, 0}, {0, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 0}, {0, 250 - i, 0}, {0, i, 0}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 250-i, 0}));
+  }
+  // blue wave
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 0, i}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 0, 250 - i}, {0, 0, i}, {0, 0, 0}, {0, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 250 - i}, {0, 0, i}, {0, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, 250 - i}, {0, 0, i}));
+  }
+  for (byte i = 0; i < 250; i += 10) {
+    dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 250-i}));
+  }
+  dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}));
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+void dmx_par_wave6() {
+  for (byte i = 0; i < 250; i += 5) {
+    dmx_write_par_led(lamps_with({i, 0, 0}, {0, 0, 0}, {0, 0, 0}, {i, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += 5) {
+    dmx_write_par_led(lamps_with({250-i, i, 0}, {i, 0, 0}, {i, 0, 0}, {250-i, i, 0}));
+  }
+  for (byte i = 0; i < 250; i += 5) {
+    dmx_write_par_led(lamps_with({0, 250-i, i}, {250-i, i, 0}, {250-i, i, 0}, {0, 250-i, i}));
+  }
+  for (byte i = 0; i < 250; i += 5) {
+    dmx_write_par_led(lamps_with({0, 0, 250-i}, {0, 250-i, i}, {0, 250-i, i}, {0, 0, 250-i}));
+  }
+  for (byte i = 0; i < 250; i += 5) {
+    dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 250-i}, {0, 0, 250-i}, {0, 0, 0}));
+  }
+  dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}));
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+void dmx_par_wave7() {
+  byte increment = 5;
+  for (byte i = 0; i < 250; i += increment) {
+    dmx_write_par_led(lamps_with({0, 0, 0}, {i, 0, 0}, {i, 0, 0}, {0, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += increment) {
+    dmx_write_par_led(lamps_with({i, 0, 0}, {250-i, i, 0}, {250-i, i, 0}, {i, 0, 0}));
+  }
+  for (byte i = 0; i < 250; i += increment) {
+    dmx_write_par_led(lamps_with({250-i, i, 0}, {0, 250-i, i}, {0, 250-i, i}, {250-i, i, 0}));
+  }
+  for (byte i = 0; i < 250; i += increment) {
+    dmx_write_par_led(lamps_with({0, 250-i, i}, {0, 0, 250-i}, {0, 0, 250-i}, {0, 250-i, i}));
+  }
+  for (byte i = 0; i < 250; i += increment) {
+    dmx_write_par_led(lamps_with({0, 0, 250-i}, {0, 0, 0}, {0, 0, 0}, {0, 0, 250-i}));
+  }
+  dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}));
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+struct ParLedMessages make_lamps(byte channel, byte lamp, byte brightness) {
+  switch (lamp) {
+    case 0: {
+      if (channel == 0) {
+        return lamps_with({brightness, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0});
+      } else if (channel == 1) {
+        return lamps_with({0, brightness, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0});
+      } else {
+        return lamps_with({0, 0, brightness}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0});
+      }
+    }
+    case 1: {
+      if (channel == 0) {
+        return lamps_with({0, 0, 0}, {brightness, 0, 0}, {0, 0, 0}, {0, 0, 0});
+      } else if (channel == 1) {
+        return lamps_with({0, 0, 0}, {0, brightness, 0}, {0, 0, 0}, {0, 0, 0});
+      } else {
+        return lamps_with({0, 0, 0}, {0, 0, brightness}, {0, 0, 0}, {0, 0, 0});
+      }
+    }
+    case 2: {
+      if (channel == 0) {
+        return lamps_with({0, 0, 0}, {0, 0, 0}, {brightness, 0, 0}, {0, 0, 0});
+      } else if (channel == 1) {
+        return lamps_with({0, 0, 0}, {0, 0, 0}, {0, brightness, 0}, {0, 0, 0});
+      } else {
+        return lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, brightness}, {0, 0, 0});
+      }
+    }
+    case 3: {
+      if (channel == 0) {
+        return lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {brightness, 0, 0});
+      } else if (channel == 1) {
+        return lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, brightness, 0});
+      } else {
+        return lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, brightness});
+      }
+    }
+  }
+}
+
+void fade_cycle_lamp(byte channel, byte lamp) {
+  byte increment = 5;
+  for (byte i = 0; i < 250; i += increment) {
+    dmx_write_par_led(make_lamps(channel, lamp, i));
+  }
+} 
+
+void dmx_par_wave8() {
+  for (int i = 0; i < 10; i++) {
+    byte channel = random(3);
+    byte lamp = random(4);
+    fade_cycle_lamp(channel, lamp);
+  }
+  dmx_write_par_led(lamps_with({0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}));
+}
+
+// --------------------------------------------------------------------------------------------------------------------
 
 void par_wave() {
-  // long program = random(4);
-  // switch (program) {
-  //   case 0: dmx_par_wave1(); break;
-  //   case 1: dmx_par_wave2(); break;
-  //   case 2: dmx_par_wave3(); break;
-  //   case 3: dmx_par_wave4(); break;
-  // }
-  dmx_par_wave4();
+  long program = random(8);
+  switch (program) {
+    case 0: dmx_par_wave1(); break;
+    case 1: dmx_par_wave2(); break;
+    case 2: dmx_par_wave3(); break;
+    case 3: dmx_par_wave4(); break;
+    case 4: dmx_par_wave5(); break;
+    case 5: dmx_par_wave6(); break;
+    case 6: dmx_par_wave7(); break;
+    case 7: dmx_par_wave8(); break;
+  }
 }
